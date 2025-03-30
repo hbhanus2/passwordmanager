@@ -1,0 +1,70 @@
+<h1>Manage Saved Passwords for {{username}}</h1>
+<p>
+    <a href="/add_password"><button>Add New Password</button></a>
+</p>
+
+<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
+<spline-viewer url="https://prod.spline.design/r-jVMNPk8naYNMhr/scene.splinecode"></spline-viewer>
+<!-- Display saved passwords -->
+<!-- Display saved passwords in stacked card format -->
+<div class="password-container">
+    {{#each savedPasswords}}
+    <div class="password-card">
+        <div class="password-info">
+            <div class="password-name">{{this.name}}</div>
+            <div class="password-username">Username: {{this.login_username}}</div>
+            <div id="password-{{this.pass_id}}" class="password-details" data-password="{{this.encrypted_password}}">
+                {{#if this.encrypted_password}} •••••••• {{else}} Details not available {{/if}}
+            </div>
+        </div>
+        <div class="password-actions">
+        
+            <form action="/deletepassword/{{this.pass_id}}" method="POST" style="display:inline;">
+                <button type="submit" onclick="return confirm('Are you sure you want to delete this password?');">Delete</button>
+            </form>
+        </div>
+    </div>
+    {{/each}}
+</div>
+<a href="/logout">Logout</a>
+
+<!-- Show password on hover -->
+<script>
+    document.querySelectorAll('.password-details').forEach(span => {
+        let timeoutId;
+
+        span.addEventListener('mouseover', async () => {
+            span.textContent = 'Loading...';
+            clearTimeout(timeoutId);
+
+            const encryptedPassword = span.dataset.password;
+            try {
+                const response = await fetch('/decrypt-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ encryptedPassword }),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    span.textContent = data.decryptedPassword;
+                } else {
+                    span.textContent = 'Error decrypting password';
+                    console.error('Decryption error:', await response.text());
+                }
+            } catch (err) {
+                span.textContent = 'Error decrypting password';
+                console.error('Error fetching password:', err);
+            }
+        });
+
+        span.addEventListener('mouseout', () => {
+            timeoutId = setTimeout(() => {
+                span.textContent = '••••••••';
+            }, 100);
+        });
+    });
+</script>
+

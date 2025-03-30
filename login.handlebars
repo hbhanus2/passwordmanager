@@ -1,0 +1,28 @@
+<!-- for login page-->
+<h1>Login</h1>
+<form class="login-form"action="/login" method="POST">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+    
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    
+    <button type="submit">Login</button>
+</form>
+<div id="error-message"></div>
+<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
+<spline-viewer url="https://prod.spline.design/r-jVMNPk8naYNMhr/scene.splinecode"></spline-viewer>
+<a href="/">Go back to Home</a>
+<!-- for better ux-->
+<script>
+
+    const errorMessage = "{{errorMessage}}";
+
+    //to display the error message
+    if (errorMessage) {
+        const errorDiv = document.getElementById('error-message');
+        errorDiv.textContent = errorMessage;
+        errorDiv.style.display = 'block';
+    }
+</script>
+

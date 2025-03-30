@@ -1,0 +1,58 @@
+<h1>Saved Passwords for {{username}}</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Website/App Name</th>
+            <th>Details</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each savedPasswords}}
+        <tr>
+            <td>{{this.name}}</td>
+            <td>
+                {{#if this.details}}
+                    <span id="password-{{this.pass_id}}" class="password" data-password="{{this.details}}">••••••••</span>
+                {{else}}
+                    <span>Details not available</span>
+                {{/if}}
+            </td>
+            <td>
+                <!-- Future actions like edit or delete -->
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+
+<h3>Add New Password</h3>
+<form action="/add_password" method="POST">
+    <label for="websiteName">Website/App Name:</label>
+    <input type="text" id="websiteName" name="websiteName" required>
+
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+
+
+    <button type="submit">Save Password</button>
+</form>
+
+<script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.82/build/spline-viewer.js"></script>
+<spline-viewer url="https://prod.spline.design/r-jVMNPk8naYNMhr/scene.splinecode"></spline-viewer>
+<a href="/savedpasswords">HomePage</a>
+<!-- Show password on hover -->
+<script>
+    document.querySelectorAll('.password-details').forEach(span => {
+        span.addEventListener('mouseover', () => {
+            span.textContent = span.dataset.password;
+        });
+        span.addEventListener('mouseout', () => {
+            span.textContent = '••••••••';
+        });
+    });
+</script>
+
