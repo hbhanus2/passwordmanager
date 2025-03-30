@@ -1,18 +1,18 @@
 {
-    "version":2,
-    "builds":[
-         "env": {
-      "NODE_VERSION": "18"
+  "version": 2,
+  "env": {
+    "NODE_VERSION": "18"
+  },
+  "builds": [
+    {
+      "src": "index.js",
+      "use": "@vercel/node"
     }
-        {
-            "src":"index.js",
-            "use":"@vercel/node"
-        }
-    ],
-    "routes":[
-        {
-            "src":"/(.*)",
-            "dest":"index.js"
-        }
-    ]
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "index.js"
+    }
+  ]
 }
