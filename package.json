@@ -1,5 +1,4 @@
 {
-  
   "name": "passwordmanager",
   "version": "1.0.0",
   "engines": {
@@ -7,9 +6,6 @@
   },
   "scripts": {
     "start": "node index.js"
-  },
-  
-
   },
   "keywords": [],
   "author": "",
